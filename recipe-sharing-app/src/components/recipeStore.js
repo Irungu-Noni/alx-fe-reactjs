@@ -1,5 +1,21 @@
-// src/components/recipeStore.js
-// 👈 This file exists to satisfy the import requirement.
-//    It re-exports the real store from ../store/useRecipeStore.js
+// src/store/recipeStore.js
+import { create } from 'zustand'
 
-export { default as useRecipeStore } from '../store/useRecipeStore';
+const useRecipeStore = create((set) => ({
+  // State: array of recipes
+  recipes: [],
+
+  // Action: Add a new recipe
+  addRecipe: (newRecipe) => {
+    // 🛡️ GUARD: Don't allow empty title
+    if (!newRecipe.title?.trim()) return;
+    set((state) => ({
+      recipes: [...state.recipes, { ...newRecipe, title: newRecipe.title.trim() }],
+    }));
+  },
+
+  // Action: Initialize recipes (e.g., load sample data)
+  setRecipes: (recipes) => set({ recipes }),
+}));
+
+export default useRecipeStore;
