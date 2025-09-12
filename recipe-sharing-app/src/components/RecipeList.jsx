@@ -3,15 +3,15 @@ import useRecipeStore from './recipeStore';
 import { Link } from 'react-router-dom';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore(state => state.recipes);
+  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
 
-  if (recipes.length === 0) {
-    return <p className="text-gray-500">No recipes yet. Add one!</p>;
+  if (filteredRecipes.length === 0) {
+    return <p className="text-gray-500">No filteredRecipes yet. Add one!</p>;
   }
 
   return (
     <div className="space-y-4 mt-6">
-      {recipes.map(recipe => (
+      {filteredRecipes.map(recipe => (
         <div key={recipe.id} className="border p-4 rounded-lg bg-white shadow">
           <h3 className="text-xl font-bold text-gray-800">{recipe.title}</h3>
           <p className="text-gray-600 mt-2">{recipe.description}</p>
