@@ -1,8 +1,8 @@
 // src/components/RecipeList.jsx
-import recipeStore from '../store/recipeStore';
+import { useRecipeStore } from './recipeStore';
 
 const RecipeList = () => {
-  const recipes = recipeStore(state => state.recipes);
+  const recipes = useRecipeStore(state => state.recipes);
 
   if (recipes.length === 0) {
     return <p className="text-gray-500">No recipes yet. Add one!</p>;
