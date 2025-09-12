@@ -15,7 +15,24 @@ const useRecipeStore = create((set) => ({
   },
 
   // Action: Initialize recipes (e.g., load sample data)
-  setRecipes: (recipes) => set({ recipes }),
+
+updateRecipe: (id, updatedRecipe) => {
+    if (!updatedRecipe.title?.trim()) return; // 🛡️ GUARD: Don't allow empty title
+    set((state) => ({
+      recipes: state.recipes.map((recipe) =>
+        recipe.id === id ? { ...recipe, ...updatedRecipe, title: updatedRecipe.title.trim() } : recipe
+      ),
+    }));
+  },
+
+deleteRecipe: (id) => {
+    set((state) => ({
+      recipes: state.recipes.filter((recipe) => recipe.id !== id),
+    }));
+},
+
+setRecipes: (recipes) => set({ recipes }),
+
 }));
 
 export default useRecipeStore;
