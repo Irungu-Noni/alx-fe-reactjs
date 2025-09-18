@@ -15,9 +15,14 @@ export const fetchUserData = async (username) => {
 
 export const fetchAdvancedSearch = async (query, page = 1) => {
   try {
-    const response = await axios.get(`https://api.github.com/search/users`, {
-      params: { q: query, page, per_page: 30 },
+    const baseUrl = 'https://api.github.com/search/users?q';
+    let fullQuery = query;
+
+    if (fullQuery.includes('location') || fullQuery.includes('repos:>=')) {}
+
+    const response = await axios.get(`${baseUrl}${fullQuery ? `&q=${fullQuery}` : ''}`, { params: { page, per_page: 30 },
     });
+    
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {
