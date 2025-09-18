@@ -1,12 +1,10 @@
 import React from 'react';
+import Search from './components/Search';
 
 function App() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">GitHub User Search</h1>
-      <p>Ready for development!</p>
-
-      {/* console.log("GitHub API URL:", import.meta.env.VITE_GITHUB_API_URL); */}
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+      <Search />
     </div>
   );
 }
