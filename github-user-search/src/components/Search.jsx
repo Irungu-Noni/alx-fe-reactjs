@@ -7,6 +7,7 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -21,6 +22,7 @@ function Search() {
     const queryParts = [];
     if (username.trim()) queryParts.push(username);
     if (location.trim()) queryParts.push(`location:${location}`);
+    if (minRepos) queryParts.push(`repos:>=${minRepos}`)
 
     const query = queryParts.join('+');
     const searchData = await fetchAdvancedSearch(query, newPage);
@@ -37,7 +39,7 @@ function Search() {
 
   const handleSubmit = async (event) => {
   event.preventDefault();
-  if (!username.trim() && !location.trim()) return;
+  if (!username.trim() && !location.trim() && !minRepos) return;
 
   setLoading(true);
   setError('');
@@ -45,7 +47,7 @@ function Search() {
   setUsers([]);
 
   try {
-    if (username.trim() && location.trim()) {
+    if (username.trim() && location.trim() && !minRepos) {
         // single user search
         const userData = await fetchUserData(username);
         setUser(userData);
@@ -54,6 +56,7 @@ function Search() {
         const queryParts = [];
         if (username.trim()) queryParts.push(username);
         if (location.trim()) queryParts.push(`location:${location}`);
+        if (minRepos) queryParts.push(`repos:>=${minRepos}`)
 
         const query = queryParts.join('+');
         const searchData = await fetchAdvancedSearch(query, page);
@@ -97,6 +100,20 @@ function Search() {
                 />
             </div>
 
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Min Repositories
+                </label>
+                <input
+                    type="number"
+                    value={minRepos}
+                    onChange={(event) => setMinRepos(event.target.value)}
+                    placeholder="e.g. 50"
+                    min="0"
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+            </div>
+
             <button
                 type="submit"
                 className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-medium"
@@ -118,6 +135,7 @@ function Search() {
                 />
                 <h4 className="font-medium">{user.name || user.login}</h4>
                 {user.location && <p className="text-gray-600">📍 {user.location}</p>}
+                <p className="text-gray-600">📦 {user.public_repos} repos</p>
                 <a
                     href={user.html_url}
                     target="_blank"
@@ -147,6 +165,7 @@ function Search() {
                     <div className="flex-1">
                         <h4 className="font-medium">{user.login}</h4>
                         {user.location && <p className="text-sm text-gray-600">📍 {user.location}</p>}
+                        <p className="text-sm text-gray-600">📦 {user.public_repos} repos</p>
                         <a
                             href={user.html_url}
                             target="_blank"
