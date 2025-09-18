@@ -7,8 +7,8 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (event) => {
+  event.preventDefault();
   if (!username.trim()) return;
 
   setLoading(true);
@@ -32,7 +32,7 @@ function Search() {
         <input
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
           placeholder="Enter GitHub username"
           className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
