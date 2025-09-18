@@ -8,7 +8,7 @@ export const fetchUserData = async (username) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            throw new Error('User not found');
+            throw new Error('Looks like we cant find the user');
         } else {
             throw new Error('Something went wrong. Please try again.')
         }
