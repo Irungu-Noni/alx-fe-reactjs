@@ -3,20 +3,80 @@
         "id": 1,
         "title": "Spaghetti Carbonara",
         "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-        "image": "https://via.placeholder.com/150"
+        "image": "https://via.placeholder.com/150",
+        "ingredients": [
+            "400g spaghetti",
+            "150g pancetta or guanciale, diced",
+            "3 large eggs",
+            "1 egg yolk",
+            "50g Pecorino Romano, grated",
+            "50g Parmesan, grated",
+            "Freshly ground black pepper",
+            "Salt"
+        ],
+        "instructions": [
+            "Bring a large pot of salted water to a boil. Cook spaghetti according to package instructions until al dente.",
+            "While pasta cooks, fry pancetta in a large skillet over medium heat until crispy. Remove from heat.",
+            "In a bowl, whisk together eggs, egg yolk, cheeses, and plenty of black pepper.",
+            "Drain pasta, reserving 1/2 cup of cooking water.",
+            "Working quickly, add hot pasta to the skillet with pancetta. Toss to combine.",
+            "Remove from heat. Pour in egg mixture, stirring constantly. Add reserved pasta water a little at a time until creamy.",
+            "Serve immediately with extra cheese and black pepper."
+        ]
     },
     {
         "id": 2,
         "title": "Chicken Tikka Masala",
         "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-        "image": "https://via.placeholder.com/150"
+        "image": "https://via.placeholder.com/150",
+        "ingredients": [
+            "500g boneless chicken thighs",
+            "1 cup plain yogurt",
+            "2 tbsp lemon juice",
+            "2 tsp ground cumin",
+            "2 tsp ground coriander",
+            "1 tsp turmeric",
+            "1 tsp garam masala",
+            "2 tbsp vegetable oil",
+            "1 onion, finely chopped",
+            "3 garlic cloves, minced",
+            "1 tbsp ginger, grated",
+            "400g canned tomatoes",
+            "150ml heavy cream",
+            "Salt to taste",
+            "Fresh cilantro for garnish"
+        ],
+        "instructions": [
+            "Marinate chicken in yogurt, lemon juice, cumin, coriander, turmeric, and salt for at least 1 hour.",
+            "Grill or pan-sear chicken until cooked through. Set aside.",
+            "In a large pot, heat oil. Sauté onion until soft. Add garlic and ginger; cook 1 minute.",
+            "Add canned tomatoes and simmer for 10 minutes.",
+            "Blend sauce until smooth (optional).",
+            "Return chicken to the pot. Stir in cream and garam masala.",
+            "Simmer 10 minutes. Garnish with cilantro and serve with rice or naan."
+        ]
 
     },
     {
         "id": 3,
         "title": "Avocado Toast",
         "summary": "Simple, healthy, and trendy — smashed avocado on sourdough with a sprinkle of chili flakes.",
-        "image":"https://via.placeholder.com/150"
+        "image":"https://via.placeholder.com/150",
+        "ingredients": [
+            "2 slices sourdough bread",
+            "1 ripe avocado",
+            "1 tbsp lemon juice",
+            "Pinch of red chili flakes",
+            "Salt and pepper to taste",
+            "Optional: poached egg, microgreens"
+        ],
+        "instructions": [
+            "Toast sourdough until golden and crisp.",
+            "Scoop avocado into a bowl. Mash with lemon juice, salt, and pepper.",
+            "Spread avocado mixture evenly on toast.",
+            "Sprinkle with chili flakes and optional toppings.",
+            "Serve immediately."
+        ]
     },
     {
         "id": 4,
