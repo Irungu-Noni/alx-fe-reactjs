@@ -34,6 +34,7 @@ function RecipeDetail() {
                 </div>
 
                 {/* Two-column layout: Ingredients + Instructions */}
+                
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
                     <section className='bg-white p-6 rounded-xl shadow'>
                         <h2 className='text-2xl font-bold text-gray-800 mb-4'>Ingredients</h2>
