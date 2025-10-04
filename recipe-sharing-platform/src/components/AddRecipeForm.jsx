@@ -1,204 +1,148 @@
 // src/components/AddRecipeForm.jsx
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const AddRecipeForm = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    ingredients: '',
-    steps: '',
-  });
+export default function AddRecipeForm() {
+  // Form state
+  const [title, setTitle] = useState('');
+  const [ingredients, setIngredients] = useState('');
+  const [instructions, setInstructions] = useState('');
 
+  // Validation & error state
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  // Handle form submission
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
+    // Reset errors
+    setErrors({});
 
-  // Basic validation helper
-  const validate = () => {
+    // Validation
+    let isValid = true;
     const newErrors = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = 'Recipe title is required';
+    if (!title.trim()) {
+      newErrors.title = 'Title is required';
+      isValid = false;
     }
 
-    if (!formData.ingredients.trim()) {
-      newErrors.ingredients = 'Please list at least one ingredient';
-    } else {
-      const ingredientLines = formData.ingredients
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean);
-      if (ingredientLines.length < 1) {
-        newErrors.ingredients = 'Please list at least one ingredient';
-      }
+    const ingredientsList = ingredients
+      .split('\n')
+      .map((item) => item.trim())
+      .filter(Boolean); // Remove empty lines
+
+    if (ingredientsList.length < 2) {
+      newErrors.ingredients = 'Please list at least 2 ingredients (one per line)';
+      isValid = false;
     }
 
-    if (!formData.steps.trim()) {
-      newErrors.steps = 'Preparation steps are required';
-    } else {
-      const stepLines = formData.steps
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean);
-      if (stepLines.length < 1) {
-        newErrors.steps = 'Please include at least one step';
-      }
+    if (!instructions.trim()) {
+      newErrors.instructions = 'Instructions are required';
+      isValid = false;
     }
 
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = validate();
-
-    if (Object.keys(newErrors).length > 0) {
+    if (!isValid) {
       setErrors(newErrors);
       return;
     }
 
-    setIsSubmitting(true);
-
-    // ✅ Simulate saving (in real app: POST to API)
-    console.log('New recipe submitted:', {
-      ...formData,
+    // ✅ Valid! Log or send to backend
+    const newRecipe = {
       id: Date.now(), // temporary ID
-    });
+      title: title.trim(),
+      summary: 'A user-submitted recipe.',
+      image: 'https://via.placeholder.com/150',
+      ingredients: ingredientsList,
+      instructions: instructions
+        .split('\n')
+        .map((step) => step.trim())
+        .filter(Boolean),
+    };
 
-    // 🎉 Show success message or redirect
-    alert('Recipe added successfully!');
-    navigate('/'); // Go back to home
+    console.log('New Recipe Submitted:', newRecipe);
+    alert('Recipe submitted successfully! (Check console)');
+
+    // Optional: Reset form
+    setTitle('');
+    setIngredients('');
+    setInstructions('');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800">Add a New Recipe</h1>
-          <p className="mt-2 text-gray-600">
-            Share your favorite dish with the community!
-          </p>
+    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        Add a New Recipe
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Recipe Title */}
+        <div>
+          <label htmlFor="title" className="block text-gray-700 font-medium mb-2">
+            Recipe Title *
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+              errors.title ? 'border-red-500 bg-red-50' : 'border-gray-300'
+            }`}
+            placeholder="e.g., Spaghetti Carbonara"
+          />
+          {errors.title && (
+            <p className="mt-1 text-sm text-red-600">{errors.title}</p>
+          )}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Recipe Title */}
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Recipe Title *
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.title ? 'border-red-500' : 'border-gray-300'
-                } focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition`}
-                placeholder="e.g., Creamy Mushroom Risotto"
-              />
-              {errors.title && (
-                <p className="mt-1 text-sm text-red-600">{errors.title}</p>
-              )}
-            </div>
-
-            {/* Ingredients */}
-            <div>
-              <label
-                htmlFor="ingredients"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Ingredients *
-              </label>
-              <p className="text-xs text-gray-500 mb-2">
-                List one ingredient per line
-              </p>
-              <textarea
-                id="ingredients"
-                name="ingredients"
-                rows="5"
-                value={formData.ingredients}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.ingredients ? 'border-red-500' : 'border-gray-300'
-                } focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition`}
-                placeholder="2 cups Arborio rice&#10;1 liter vegetable stock&#10;1 onion, finely chopped&#10;..."
-              />
-              {errors.ingredients && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.ingredients}
-                </p>
-              )}
-            </div>
-
-            {/* Preparation Steps */}
-            <div>
-              <label
-                htmlFor="steps"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Preparation Steps *
-              </label>
-              <p className="text-xs text-gray-500 mb-2">
-                List one step per line
-              </p>
-              <textarea
-                id="steps"
-                name="steps"
-                rows="6"
-                value={formData.steps}
-                onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-lg border ${
-                  errors.steps ? 'border-red-500' : 'border-gray-300'
-                } focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition`}
-                placeholder="1. Heat stock in a saucepan...&#10;2. Sauté onion in olive oil...&#10;..."
-              />
-              {errors.steps && (
-                <p className="mt-1 text-sm text-red-600">{errors.steps}</p>
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-3 px-4 rounded-lg font-medium text-white transition ${
-                  isSubmitting
-                    ? 'bg-indigo-400 cursor-not-allowed'
-                    : 'bg-indigo-600 hover:bg-indigo-700'
-                } shadow-md hover:shadow-lg`}
-              >
-                {isSubmitting ? 'Adding Recipe...' : 'Add Recipe'}
-              </button>
-            </div>
-          </form>
+        {/* Ingredients */}
+        <div>
+          <label htmlFor="ingredients" className="block text-gray-700 font-medium mb-2">
+            Ingredients * <span className="text-gray-500">(one per line)</span>
+          </label>
+          <textarea
+            id="ingredients"
+            value={ingredients}
+            onChange={(event) => setIngredients(event.target.value)}
+            rows="5"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono ${
+              errors.ingredients ? 'border-red-500 bg-red-50' : 'border-gray-300'
+            }`}
+            placeholder="Flour&#10;Eggs&#10;Milk"
+          />
+          {errors.ingredients && (
+            <p className="mt-1 text-sm text-red-600">{errors.ingredients}</p>
+          )}
         </div>
-      </div>
+
+        {/* Instructions */}
+        <div>
+          <label htmlFor="instructions" className="block text-gray-700 font-medium mb-2">
+            Preparation Steps *
+          </label>
+          <textarea
+            id="instructions"
+            value={instructions}
+            onChange={(event) => setInstructions(event.target.value)}
+            rows="6"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+              errors.instructions ? 'border-red-500 bg-red-50' : 'border-gray-300'
+            }`}
+            placeholder="1. Mix dry ingredients&#10;2. Add wet ingredients&#10;3. Bake for 30 minutes"
+          />
+          {errors.instructions && (
+            <p className="mt-1 text-sm text-red-600">{errors.instructions}</p>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-lg transition shadow-md hover:shadow-lg"
+        >
+          Submit Recipe
+        </button>
+      </form>
     </div>
   );
-};
-
-export default AddRecipeForm;
+}
