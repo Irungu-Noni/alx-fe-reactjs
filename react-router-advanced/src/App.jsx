@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import Profile from './components/Profile';
 import BlogPost from './pages/BlogPost';
-import ProtectionRoute from './components/ProtectionRoute';
+import ProtectionRoute from './components/ProtectedRoute';
 
 function App() {
   return (
