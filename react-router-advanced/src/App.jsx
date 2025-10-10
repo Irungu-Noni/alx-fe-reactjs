@@ -2,9 +2,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import ProfileLayout from './pages/ProfileLayout';
-import ProfileDetails from './pages/ProfileDetails';
-import ProfileSettings from './pages/ProfileSettings';
+// import ProfileLayout from './pages/ProfileLayout';
+// import ProfileDetails from './pages/ProfileDetails';
+// import ProfileSettings from './pages/ProfileSettings';
 import UserProfile from './pages/UserProfile';
 import ProtectionRoute from './components/ProtectionRoute';
 
@@ -22,13 +22,10 @@ function App() {
           path="/profile"
           element={
             <ProtectionRoute>
-              <ProfileLayout />
+              <Profile />
             </ProtectionRoute>
           }
-        >
-          <Route index element={<ProfileDetails />} /> {/* /profile */}
-          <Route path="settings" element={<ProfileSettings />} /> {/* /profile/settings */}
-        </Route>
+        />
       </Routes>
     </BrowserRouter>
   );
