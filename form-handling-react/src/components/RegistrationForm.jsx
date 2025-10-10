@@ -10,34 +10,25 @@ const registerTheUser = async (userData) => {
 };
 
 function RegistrationForm() {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: ''
-    });
-
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+    const handleChange = (setter) => (event) => {
+        setter(event.target.value);
 
-        if (errors[name]) {
-            setErrors({
-                ...errors,
-                [name]: ''
-            });
+        const field = event.target.name;
+        if (errors[field]) {
+            setErrors((prev) => ({ ...prev, [field]: '' }));
         }
     };
-
+      
     const validation = () => {
         const newErrors = {};
-        if (!formData.username.trim()) newErrors.username = 'The Username is required';
-        if (!formData.email.trim()) newErrors.email = 'The Email is required';
-        if (!formData.password) newErrors.password = 'The Password is required';
+        if (!username.trim()) newErrors.username = 'The Username is required';
+        if (!email.trim()) newErrors.email = 'The Email is required';
+        if (!password) newErrors.password = 'The Password is required';
         return newErrors;
     };
 
@@ -51,9 +42,12 @@ function RegistrationForm() {
         }
 
         try {
-            await registerTheUser(formData);
+            await registerTheUser({ username, email, password });
             alert('Registration is a success!!!');
-            setFormData({ username: '', email: '', password: '' });
+            setUsername('');
+            setEmail('');
+            setPassword('');
+            setErrors({});
         } catch (err) {
             alert('Registration Failure')
         }
@@ -67,7 +61,7 @@ function RegistrationForm() {
                 <input 
                     name="username"
                     placeholder="Input the Username"
-                    value={formData.username}
+                    value={username}
                     onChange={handleChange}
                 />
                 {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
@@ -78,7 +72,7 @@ function RegistrationForm() {
                     name="email"
                     type="email"
                     placeholder="Input the Email"
-                    value={formData.email}
+                    value={email}
                     onChange={handleChange}
                 />
                 {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
@@ -89,7 +83,7 @@ function RegistrationForm() {
                     name="password"
                     type="password"
                     placeholder="Input the Password"
-                    value={formData.password}
+                    value={password}
                     onChange={handleChange}
                 />
                 {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
