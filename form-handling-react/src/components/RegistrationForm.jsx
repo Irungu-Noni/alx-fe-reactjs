@@ -15,19 +15,18 @@ function RegistrationForm() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
 
-    const handleChange = (setter) => (event) => {
-        setter(event.target.value);
-
-        const field = event.target.name;
-        if (errors[field]) {
-            setErrors((prev) => ({ ...prev, [field]: '' }));
-        }
-    };
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        if (name === 'username') setUsername(value);
+        if (name === 'email') setEmail(value);
+        if (name === 'password') setPassword(value);
+    }
       
     const validation = () => {
         const newErrors = {};
-        if (!username.trim()) newErrors.username = 'The Username is required';
-        if (!email.trim()) newErrors.email = 'The Email is required';
+
+        if (!username) newErrors.username = 'The Username is required';
+        if (!email) newErrors.email = 'The Email is required';
         if (!password) newErrors.password = 'The Password is required';
         return newErrors;
     };
