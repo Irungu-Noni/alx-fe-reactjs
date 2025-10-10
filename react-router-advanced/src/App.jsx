@@ -6,6 +6,8 @@ import Login from './pages/Login';
 // import ProfileDetails from './pages/ProfileDetails';
 // import ProfileSettings from './pages/ProfileSettings';
 import UserProfile from './pages/UserProfile';
+import Profile from './components/Profile';
+import BlogPost from './pages/BlogPost';
 import ProtectionRoute from './components/ProtectionRoute';
 
 function App() {
@@ -15,7 +17,8 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile/:id" element={<UserProfile />} /> {/* Dynamic */}
+        <Route path="/profile/:id" element={<UserProfile />} />
+        <Route path="/blog/:id" /> {/* Dynamic */}
 
         {/* Protected nested routes */}
         <Route
