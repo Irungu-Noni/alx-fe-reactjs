@@ -2,6 +2,13 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import TodoList from "../components/TodoList";
 
+let TodoList;
+
+beforeAll(async () => {
+  const module = await import('../components/TodoList.jsx');
+  TodoList = module.default;
+});
+
 test("renders TodoList component", () => {
   
   render(<TodoList />);
