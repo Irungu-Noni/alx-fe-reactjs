@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import TodoList from "../components/TodoList";
 
 test("renders TodoList component", () => {
+  
   render(<TodoList />);
 
   expect(screen.getByText('Learn React')).toBeInTheDocument();
@@ -33,18 +34,17 @@ test("toggles todo completion status", () => {
 
   fireEvent.click(screen.getByText('Learn React'));
   expect(todoItem).not.toHaveStyle('text-decoration: none');
-  
+    
   fireEvent.click(screen.getByText('Learn React'));
   expect(todoItem).not.toHaveStyle('text-decoration: line-through');
-
 });
 
 test("removes a todo item", () => {
   render(<TodoList />);
 
   const removeButtons = screen.getAllByText('❌');
-  
+    
   fireEvent.click(removeButtons[0]);
-  
+    
   expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
 });

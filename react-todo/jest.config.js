@@ -4,6 +4,7 @@ import { transform } from "@babel/core";
 
 // /** @type {import('jest').Config} */
 export default {
+  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
   transform: {
