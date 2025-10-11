@@ -9,8 +9,9 @@ test("renders TodoList component", () => {
   expect(screen.getByText('Learn React')).toBeInTheDocument();
   expect(screen.getByText('Build a Todo App')).toBeInTheDocument();
 
-  const completedTasks = screen.getByText('Build a Todo App');
-  expect(completedTasks.closest('li')).toHaveStyle('text-decoration: line-through'); // Only one todo is completed initially
+  // const completedTasks = screen.getByText('Build a Todo App');
+  // expect(completedTasks.closest('li')).toHaveStyle('text-decoration: line-through'); // Only one todo is completed initially
+  expect(screen.getByText('Build a Todo App').closest('li')).toHaveStyle('text-decoration: line-through');
 });
 
 test("adds a new todo item", () => {
@@ -28,23 +29,34 @@ test("adds a new todo item", () => {
 test("toggles todo completion status", () => {
   render(<TodoList />);
 
-  const todoItem = screen.getByText('Learn React').closest('li');
+  const todo = screen.getByText('Learn React');
+  const item = todo.closest('li');
 
-  expect(todoItem).not.toHaveStyle('text-decoration: line-through');
+  expect(item).not.toHaveStyle('text-decoration: line-through');
 
-  fireEvent.click(screen.getByText('Learn React'));
-  expect(todoItem).not.toHaveStyle('text-decoration: none');
+  fireEvent.click(todo);
+  expect(item).toHaveStyle('text-decoration: line-through');
+
+  fireEvent.click(todo);
+  expect(item).not.toHaveStyle('text-decoration: line-through');
+
+  // const todoItem = screen.getByText('Learn React').closest('li');
+
+  // expect(todoItem).not.toHaveStyle('text-decoration: line-through');
+
+  // fireEvent.click(screen.getByText('Learn React'));
+  // expect(todoItem).not.toHaveStyle('text-decoration: none');
     
-  fireEvent.click(screen.getByText('Learn React'));
-  expect(todoItem).not.toHaveStyle('text-decoration: line-through');
+  // fireEvent.click(screen.getByText('Learn React'));
+  // expect(todoItem).not.toHaveStyle('text-decoration: line-through');
 });
 
 test("removes a todo item", () => {
   render(<TodoList />);
 
-  const removeButtons = screen.getAllByText('❌');
+  const removeButton = screen.getAllByText('❌')[0];
     
-  fireEvent.click(removeButtons[0]);
+  fireEvent.click(removeButton);
     
   expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
 });
