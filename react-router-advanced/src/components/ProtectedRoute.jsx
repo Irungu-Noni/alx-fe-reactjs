@@ -1,8 +1,11 @@
 import { Navigate } from "react-router-dom";
-import { getIsAuthenticator } from "../authenticator";
+// import { getIsAuthenticator } from "../authenticator";
+import { useAuth } from "../hooks/useAuth";
 
 function ProtectionRoute({ children }) {
-    if (!getIsAuthenticator()) {
+    const { isAuthenticated } = useAuth();
+
+    if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
     return children;    
