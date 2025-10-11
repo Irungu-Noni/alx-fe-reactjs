@@ -32,7 +32,7 @@ test("toggles todo completion status", () => {
   expect(todoItem).not.toHaveStyle('text-decoration: line-through');
 
   fireEvent.click(screen.getByText('Learn React'));
-  expect(todoItem).not.toHaveStyle('text-decoration: line-none');
+  expect(todoItem).not.toHaveStyle('text-decoration: line-through');
   
   fireEvent.click(screen.getByText('Learn React'));
   expect(todoItem).not.toHaveStyle('text-decoration: line-through');
